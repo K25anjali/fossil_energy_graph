@@ -38,17 +38,17 @@ const App = () => {
   };
 
   const colors = {
-    coalElectricity: "#154a45",
-    coalOther: "#719595",
-    gasElectricity: "#4b4aa8",
-    gasOther: "#4f4dff",
-    oilElectricity: "#941819",
-    oilOther: "#ac3d3e",
+    coalElectricity: "#1b4448",
+    coalOther: "#437574",
+    gasElectricity: "#171795",
+    gasOther: "#1517ff",
+    oilElectricity: "#931917",
+    oilOther: "#ad3d3a",
   };
 
   // Keys for stacked areas/bars
-  const historicalKeys = ["production", "electricity", "other"];
-  const futureKeys = ["production", "electricity", "other"];
+  const historicalKeys = ["production", "other", "electricity"];
+  const futureKeys = ["production", "other", "electricity",];
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -115,16 +115,17 @@ const App = () => {
 
           {/* Historical Areas first to ensure Line is on top */}
           {historicalKeys
-            .filter((key) => key !== "production") // Render areas first
+            .filter((key) => key !== "production")
             .map((key) => (
               <Area
                 key={key}
                 type="monotone"
                 dataKey={(d) => (!d.isFuture ? d[key] : null)}
+                stackId={1}
                 stroke="transparent"
                 fill={colors[`${source}${key[0].toUpperCase() + key.slice(1)}`]}
                 fillOpacity={0.8}
-                pointerEvents="none" // Prevent areas from capturing hover events
+                pointerEvents="none"
               />
             ))}
 

@@ -1,11 +1,11 @@
 const CustomLegend = () => {
     const legendData = [
-        { name: "Coal|Electricity", color: "#154a45" },
-        { name: "Coal|Other", color: "#457473" },
-        { name: "Gas|Electricity", color: "#17159e" },
-        { name: "Gas|Other", color: "#1717fc" },
-        { name: "Oil|Electricity", color: "#941819" },
-        { name: "Oil|Other", color: "#ac3d3e" },
+        { name: "Coal|Electricity", color: "#1b4448" },
+        { name: "Coal|Other", color: "#437574" },
+        { name: "Gas|Electricity", color: "#171795" },
+        { name: "Gas|Other", color: "#1517ff" },
+        { name: "Oil|Electricity", color: "#931917" },
+        { name: "Oil|Other", color: "#ad3d3a" },
     ];
 
     return (
