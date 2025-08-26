@@ -1,4 +1,3 @@
-
 // Coal data
 export const coalData = [
     { year: 1981, production: 2.83885622, electricity: null, other: null },
@@ -45,9 +44,8 @@ export const coalData = [
     { year: 2022, production: 11.2365284, electricity: 1.192707692, other: 0.374338308 },
     { year: 2023, production: 11.66484261, electricity: 1.159476923, other: 0.306156077 },
     { year: 2024, production: null, electricity: 1.175723077, other: null },
-    { year: 2030, production: null, electricity: 0.064615385, other: 0.156084615, },
-    { year: 2035, production: null, electricity: 0.02974359, other: 0.12565641, }
-
+    { year: 2030, production: null, electricity: 0.064615385, other: 0.156084615 },
+    { year: 2035, production: null, electricity: 0.02974359, other: 0.12565641 }
 ];
 
 // Gas data
@@ -100,9 +98,9 @@ export const gasData = [
     { year: 2021, production: 5.325336933, electricity: 0.342936, other: 1.115925 },
     { year: 2022, production: 5.552608967, electricity: 0.365904, other: 1.137906 },
     { year: 2023, production: 5.462647915, electricity: 0.336024, other: 1.182968 },
-    { year: 2024, production: null, electricity: 0.342504, other: null },
+    { year: 2024, production: null, electricity: null, other: null },
     { year: 2030, production: null, electricity: 0.184, other: 0.7934 },
-    { year: 2035, production: null, electricity: 0.0518, other: 0.5844, }
+    { year: 2035, production: null, electricity: 0.0518, other: 0.5844 }
 ];
 
 // Oil data
@@ -155,8 +153,7 @@ export const oilData = [
     { year: 2021, production: 0.971488758, electricity: 0.047538462, other: 1.729906538 },
     { year: 2022, production: 0.901294179, electricity: 0.050307692, other: 1.752064308 },
     { year: 2023, production: 0.838327844, electricity: 0.051507692, other: 1.912305308 },
-    { year: 2024, production: null, electricity: 0.051969231, other: null },
+    { year: 2024, production: null, electricity: null, other: null },
     { year: 2030, production: null, electricity: 0.018974359, other: 1.747625641 },
     { year: 2035, production: null, electricity: 0.007948718, other: 1.546651282 }
 ];
-

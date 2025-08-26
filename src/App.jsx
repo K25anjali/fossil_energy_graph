@@ -10,9 +10,11 @@ import {
   ResponsiveContainer,
   ReferenceLine,
   Label,
-  Line
+  Line,
+  ReferenceArea
 } from 'recharts';
 import { gasData, coalData, oilData } from './data';
+import CustomLegend from './CustomLegend';
 
 const App = () => {
   const [isTooltipActive, setIsTooltipActive] = useState(false);
@@ -20,7 +22,7 @@ const App = () => {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 640); // Tailwind "sm"
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -44,49 +46,6 @@ const App = () => {
     oilElectricity: "#941819",
     oilOther: "#ac3d3e",
   };
-
-  const CustomLegend = () => {
-    const legendData = [
-      { name: "Coal|Electricity", color: "#154a45" },
-      { name: "Coal|Other", color: "#457473" },
-      { name: "Gas|Electricity", color: "#17159e" },
-      { name: "Gas|Other", color: "#1717fc" },
-      { name: "Oil|Electricity", color: "#941819" },
-      { name: "Oil|Other", color: "#ac3d3e" },
-    ];
-
-    return (
-      <div className="flex flex-col lg:flex-col md:flex-row justify-center gap-8 max-lg:mb-10">
-        {/* Fossil Use Section */}
-        <div className="flex flex-col">
-          <h1 className="font-semibold mb-2">Fossil use</h1>
-          <ul className="flex lg:flex-col flex-row max-lg:flex-wrap gap-2">
-            {legendData.map((item, i) => (
-              <li key={i} className="flex items-center gap-2">
-                <span
-                  className="md:h-5 md:w-5 w-3 h-3"
-                  style={{ backgroundColor: item.color }}
-                ></span>
-                {item.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Domestic Supply Section */}
-        <div className="flex flex-col mt-4 lg:mt-2">
-          <h1 className="font-semibold mb-2">Domestic Supply</h1>
-          <ul className="flex flex-col gap-2">
-            <li className="flex items-center gap-2">
-              <span className="text-black font-bold text-lg">--</span>
-              Production
-            </li>
-          </ul>
-        </div>
-      </div>
-    );
-  };
-
 
   // Keys for stacked areas/bars
   const historicalKeys = ["production", "electricity", "other"];
@@ -113,57 +72,52 @@ const App = () => {
 
   const renderChart = (data, source, showAxis = false) => (
     <div className="min-w-[350px] w-full h-84 md:h-[450px] relative">
+      <h1 className="md:w-[294px] w-[282px] text-center max-md:text-sm font-bold z-10 absolute bg-gray-200 top-0 left-16 border">
+        {source.toUpperCase()}
+      </h1>
       <ResponsiveContainer width="100%" height="100%">
-
         <ComposedChart data={data.map(d => ({ ...d, isFuture: d.year >= 2030, source }))}>
-          {/* Heading overlay */}
-          <div className="w-full text-center font-bold z-10">
-            {source.toUpperCase()}
-          </div>
           <CartesianGrid />
 
           <XAxis
             dataKey="year"
             domain={[2000, 2035]}
             ticks={[2000, 2005, 2010, 2015, 2020, 2030, 2035]}
-            tickFormatter={(tick) => [2005, 2015, 2025].includes(tick) ? '' : tick}
+            tickFormatter={(tick) => {
+              if ([2005, 2015, 2025].includes(tick)) return '';
+              if (tick === 2030) return "'30";
+              if (tick === 2035) return "'35";
+              return tick;
+            }}
             type="number"
             interval={0}
             padding={{ left: 20, right: 20 }}
           />
-
-          {/* Show Y-axis only if showAxis is true */}
-          {showAxis && (
-            <YAxis
-              label={{
-                value: 'Fossil Energy Production and use (EJ/Yr)',
-                angle: -90,
-                position: 'center',
-                offset: 50,
-                dx: -20,
-                fontSize: 18,
-                color: 'black',
-              }}
-              ticks={[0, 5, 10]}
-              padding={{ top: 20, bottom: 20 }}
-            />
-          )}
+          <YAxis
+            label={
+              showAxis
+                ? {
+                  value: 'Fossil Energy Production and use (EJ/Yr)',
+                  angle: -90,
+                  position: 'center',
+                  offset: 50,
+                  dx: -20,
+                  fontSize: 18,
+                  color: 'black',
+                }
+                : null
+            }
+            ticks={[0, 5, 10]}
+            tickFormatter={(value) => (showAxis ? value : '')}
+            padding={{ top: 30, bottom: 20 }}
+          />
 
           <Tooltip content={<CustomTooltip />} isAnimationActive={isTooltipActive} />
 
-          {/* Historical Lines / Areas only */}
-          {historicalKeys.map((key) =>
-            key === "production" ? (
-              <Line
-                key={key}
-                type="natural"
-                dataKey={(d) => (!d.isFuture ? d[key] : null)}
-                stroke="#000"
-                strokeWidth={2}
-                strokeDasharray="5 5"
-                dot={false}
-              />
-            ) : (
+          {/* Historical Areas first to ensure Line is on top */}
+          {historicalKeys
+            .filter((key) => key !== "production") // Render areas first
+            .map((key) => (
               <Area
                 key={key}
                 type="monotone"
@@ -171,11 +125,28 @@ const App = () => {
                 stroke="transparent"
                 fill={colors[`${source}${key[0].toUpperCase() + key.slice(1)}`]}
                 fillOpacity={0.8}
+                pointerEvents="none" // Prevent areas from capturing hover events
               />
-            )
-          )}
+            ))}
 
-          {/* Future Bars only */}
+          {/* Historical Production Line last to ensure it's on top */}
+          {historicalKeys
+            .filter((key) => key === "production")
+            .map((key) => (
+              <Line
+                key={key}
+                type="natural"
+                dataKey={(d) => (!d.isFuture ? d[key] : null)}
+                stroke="#000000"
+                fill='white'
+                strokeWidth={2}
+                strokeDasharray="5 5"
+                dot={false}
+                isAnimationActive={false}
+              />
+            ))}
+
+          {/* Future Bars */}
           {futureKeys
             .filter((key) => key !== "production")
             .map((key) => (
@@ -210,7 +181,6 @@ const App = () => {
       </ResponsiveContainer>
     </div>
   );
-
 
   return (
     <div
