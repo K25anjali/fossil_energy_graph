@@ -43,7 +43,7 @@ export const coalData = [
     { year: 2021, production: 11.75008011, electricity: 1.268307692, other: 0.415685308 },
     { year: 2022, production: 11.2365284, electricity: 1.192707692, other: 0.374338308 },
     { year: 2023, production: 11.66484261, electricity: 1.159476923, other: 0.306156077 },
-    { year: 2024, production: null, electricity: 1.175723077, other: null },
+    { year: 2024, production: null, electricity: 1.175723077, other: 0.306156077 },
     { year: 2030, production: null, electricity: 0.064615385, other: 0.156084615 },
     { year: 2035, production: null, electricity: 0.02974359, other: 0.12565641 }
 ];

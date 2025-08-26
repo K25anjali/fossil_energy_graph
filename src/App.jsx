@@ -11,7 +11,6 @@ import {
   ReferenceLine,
   Label,
   Line,
-  ReferenceArea
 } from 'recharts';
 import { gasData, coalData, oilData } from './data';
 import CustomLegend from './CustomLegend';
@@ -40,9 +39,9 @@ const App = () => {
 
   const colors = {
     coalElectricity: "#154a45",
-    coalOther: "#457473",
-    gasElectricity: "#17159e",
-    gasOther: "#1717fc",
+    coalOther: "#719595",
+    gasElectricity: "#4b4aa8",
+    gasOther: "#4f4dff",
     oilElectricity: "#941819",
     oilOther: "#ac3d3e",
   };
