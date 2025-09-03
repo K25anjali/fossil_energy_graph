@@ -53,13 +53,18 @@ const App = () => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
+      const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : '';
+      const formatName = (key) => {
+        if (key === 'production') return 'Production';
+        return `${capitalize(data.source)}|${capitalize(key)}`;
+      };
       return (
         <div className="bg-white p-4 border rounded shadow text-sm md:text-base">
           <p className="font-bold">{`Year: ${label}`}</p>
           {historicalKeys.map((key) =>
             data[key] ? (
               <p key={key} style={{ color: colors[`${data.source}${key[0].toUpperCase() + key.slice(1)}`] }}>
-                {`${key}: ${data[key].toFixed(2)}`}
+                {`${formatName(key)}: ${data[key].toFixed(2)}`}
               </p>
             ) : null
           )}
@@ -71,7 +76,7 @@ const App = () => {
 
   const renderChart = (data, source, showAxis = false) => (
     <div className="min-w-[350px] w-full h-84 md:h-[450px] relative">
-      <h1 className="md:w-[294px] w-[282px] text-center max-md:text-sm font-bold z-10 absolute bg-gray-200 top-0 left-16 border">
+      <h1 className="md:w-[310px] w-[282px] text-center max-md:text-sm font-bold z-10 absolute bg-gray-200 top-0 left-16 border">
         {source.toUpperCase()}
       </h1>
       <ResponsiveContainer width="100%" height="100%">
@@ -80,10 +85,10 @@ const App = () => {
 
           <XAxis
             dataKey="year"
-            domain={[2000, 2035]}
-            ticks={[2000, 2005, 2010, 2015, 2020, 2030, 2035]}
+            domain={[1990, 2035]}
+            ticks={[1990, 1995, 2000, 2005, 2010, 2015, 2020, 2030, 2035]}
             tickFormatter={(tick) => {
-              if ([2005, 2015, 2025].includes(tick)) return '';
+              if ([1995,2005, 2015, 2025].includes(tick)) return '';
               if (tick === 2030) return "'30";
               if (tick === 2035) return "'35";
               return tick;
@@ -96,7 +101,7 @@ const App = () => {
             label={
               showAxis
                 ? {
-                  value: 'Fossil Energy Production and use (EJ/Yr)',
+                  value: 'Fossil Energy Production And Use (EJ/Yr)',
                   angle: -90,
                   position: 'center',
                   offset: 50,
@@ -189,13 +194,10 @@ const App = () => {
       onTouchStart={handleOutsideClick}
     >
       <div className="p-2 w-full max-w-6xl focus:outline-none" ref={chartRef}>
-        <h2 className="text-lg md:text-xl font-bold mb-4 text-center">
-          Electricity Generation in Australia
-        </h2>
 
         {/* 3 Graphs horizontal scroll */}
         <div
-          className="flex gap-2 md:gap-6 overflow-x-auto pb-4"
+          className="flex overflow-x-auto pb-4"
           onMouseMove={handleChartInteraction}
           onTouchStart={handleChartInteraction}
         >
