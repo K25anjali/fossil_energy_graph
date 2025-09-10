@@ -80,7 +80,7 @@ const App = () => {
         {source.toUpperCase()}
       </h1>
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={data.map(d => ({ ...d, isFuture: d.year >= 2030, source }))}>
+        <ComposedChart data={data.filter(d => d.year >= 1990).map(d => ({ ...d, isFuture: d.year >= 2030, source }))}>
           <CartesianGrid />
 
           <XAxis
