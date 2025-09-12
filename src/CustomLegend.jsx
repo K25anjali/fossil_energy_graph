@@ -13,7 +13,7 @@ const CustomLegend = () => {
             {/* Fossil Use Section */}
             <div className="flex flex-col">
                 <h1 className="font-semibold mb-2 text-lg">Fossil use</h1>
-                <ul className="flex lg:flex-col flex-row max-lg:flex-wrap gap-2 text-base">
+                <ul className="flex lg:flex-col md:text-lgvtext-base flex-row max-lg:flex-wrap gap-2 ">
                     {legendData.map((item, i) => (
                         <li key={i} className="flex items-center gap-2">
                             <span
@@ -30,7 +30,7 @@ const CustomLegend = () => {
             <div className="flex flex-col mt-4 lg:mt-2">
                 <h1 className="font-semibold mb-2 text-lg">Domestic Supply</h1>
                 <ul className="flex flex-col gap-2">
-                    <li className="flex items-center gap-2 text-base">
+                    <li className="flex items-center gap-2 md:text-lg text-base">
                         <span className="text-black font-semibold text-lg">--</span>
                         Production
                     </li>

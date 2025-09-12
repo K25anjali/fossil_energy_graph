@@ -88,7 +88,7 @@ const App = () => {
             domain={[1990, 2035]}
             ticks={[1990, 1995, 2000, 2005, 2010, 2015, 2020, 2030, 2035]}
             tickFormatter={(tick) => {
-              if ([1995,2005, 2015, 2025].includes(tick)) return '';
+              if ([1995, 2005, 2015, 2025].includes(tick)) return '';
               if (tick === 2030) return "'30";
               if (tick === 2035) return "'35";
               return tick;
@@ -106,7 +106,7 @@ const App = () => {
                   position: 'center',
                   offset: 50,
                   dx: -20,
-                  fontSize: 18,
+                  fontSize: 20,
                   color: 'black',
                 }
                 : null
@@ -170,14 +170,16 @@ const App = () => {
               <Label
                 value="High Ambition"
                 position="bottom"
-                fontSize={isMobile ? 10 : 12}
+                fontSize={isMobile ? 14 : 18}
                 fill="black"
-                dy={isMobile ? 110 : -90}
+                dy={isMobile ? 110 : -100}
                 dx={isMobile ? 2 : -5}
                 angle={-90}
                 textAnchor="middle"
-                fontWeight="bold"
-                style={{ letterSpacing: "1px" }}
+                style={{
+                  letterSpacing: "1px",
+                  fontWeight: 600
+                }}
               />
             </ReferenceLine>
           )}
