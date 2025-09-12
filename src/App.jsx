@@ -59,7 +59,7 @@ const App = () => {
         return `${capitalize(data.source)}|${capitalize(key)}`;
       };
       return (
-        <div className="bg-white p-4 border rounded shadow text-sm md:text-base">
+        <div className="bg-white p-4 border rounded shadow text-base md:text-lg">
           <p className="font-semibold">{`Year: ${label}`}</p>
           {historicalKeys.map((key) =>
             data[key] ? (
@@ -76,7 +76,7 @@ const App = () => {
 
   const renderChart = (data, source, showAxis = false) => (
     <div className="min-w-[350px] w-full h-84 md:h-[450px] relative">
-      <h1 className="md:w-[310px] w-[282px] text-center max-md:text-sm font-semibold z-10 absolute bg-gray-200 top-0 left-14 border">
+      <h1 className="md:w-[310px] w-[282px] text-center max-md:text-base md:text-lg font-semibold z-10 absolute bg-gray-200 top-0 left-16 border">
         {source.toUpperCase()}
       </h1>
       <ResponsiveContainer width="100%" height="100%">
@@ -88,7 +88,7 @@ const App = () => {
             domain={[1990, 2035]}
             ticks={[1990, 1995, 2000, 2005, 2010, 2015, 2020, 2030, 2035]}
             tickFormatter={(tick) => {
-              if ([1995, 2005, 2015, 2025].includes(tick)) return '';
+              if ([1995,2005, 2015, 2025].includes(tick)) return '';
               if (tick === 2030) return "'30";
               if (tick === 2035) return "'35";
               return tick;
@@ -112,7 +112,6 @@ const App = () => {
                 : null
             }
             ticks={[0, 5, 10]}
-            // tickFormatter={(value) => (showAxis ? value : '')}
             padding={{ top: 30, bottom: 20 }}
           />
 
@@ -177,10 +176,8 @@ const App = () => {
                 dx={isMobile ? 2 : -5}
                 angle={-90}
                 textAnchor="middle"
-                style={{
-                  letterSpacing: "1px",
-                  fontWeight: 600,
-                }}
+                fontWeight="bold"
+                style={{ letterSpacing: "1px" }}
               />
             </ReferenceLine>
           )}

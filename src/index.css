@@ -1,17 +1,24 @@
 @import "tailwindcss";
 
-* {
+/* * {
   font-family: 'Inter', sans-serif;
   font-size: 18px;
-}
+} */
 
-body{
+body {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	/* font-family: ui-sans-serif, system-ui; */
+	font-family: "Poppins", "ui-sans-serif";
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	font-size: 17px;
 }
 
 .recharts-wrapper:focus,
 .recharts-surface:focus {
 	outline: none !important;
 }
+
